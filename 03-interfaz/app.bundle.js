@@ -4,7 +4,7 @@
 // Source data: plan recibido en el ZIP; no representa validación oficial de la UNAH.
 const curriculum = [
         // Data group: PROGRAMACIÓN Y SOFTWARE; agrupa las asignaturas de esta área.
-        { code: "ISC-101", name: "Introducción a la Ingeniería en Sistemas Computacionales", ca: 4, req: [], category: "Desarrollo de Software y Algoritmos" },
+        { code: "ISC-101", name: "Int a Ingenieria en Sistemas ", ca: 4, req: [], category: "Desarrollo de Software y Algoritmos" },
         { code: "ISC-102", name: "Programación Estructurada", ca: 4, req: ["ISC-101"], category: "Desarrollo de Software y Algoritmos" },
         { code: "ISC-103", name: "Programación Orientada a Objetos", ca: 5, req: ["ISC-102"], category: "Desarrollo de Software y Algoritmos" },
         { code: "ISC-204", name: "Paradigmas de Programación", ca: 4, req: ["ISC-103"], category: "Desarrollo de Software y Algoritmos" },

@@ -1,33 +1,437 @@
 <!doctype html>
 <html lang="es">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Organiza tu ruta académica de Sistemas: avance, asignaturas y prerrequisitos en un solo lugar.">
-  <title>Mi ruta académica · ISC</title>
-  <link rel="stylesheet" href="04-estilos/principal.css">
-  <script defer src="03-interfaz/app.bundle.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta
+        name="description"
+        content="Organiza tu ruta académica de Sistemas: avance, asignaturas y prerrequisitos en un solo lugar."
+    >
+
+    <title>Mi ruta académica · ISC</title>
+
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="04-estilos/principal.css">
+
+    <!-- JavaScript de la aplicación -->
+    <script defer src="03-interfaz/app.bundle.js"></script>
 </head>
+
 <body>
-  <!-- App shell: navegación primero, luego overview y finalmente el detalle de materias. -->
-  <a class="skip" href="#contenido">Saltar al contenido</a>
-  <aside class="sidebar">
-    <a class="brand" href="./"><span class="monogram">R.</span><span>Mi ruta<span class="brand-sub">ISC · UNAH</span></span></a>
-    <p class="nav-label">TU ESPACIO ACADÉMICO</p>
-    <a class="nav-active" href="#contenido">Mi plan de estudios <span>↗</span></a>
-    <p class="nav-label area-label">EXPLORAR POR ÁREA</p>
-    <nav id="areas" aria-label="Áreas del plan"></nav>
-    <div class="sidebar-bottom"><span class="local-dot"></span> Tu avance se guarda aquí<p>En este navegador y dispositivo.</p><button id="theme-btn" class="theme">Cambiar a modo oscuro</button></div>
-  </aside>
-  <main id="contenido" class="main">
-    <header class="topbar"><span>PLANIFICADOR ACADÉMICO</span><details class="tools"><summary>Gestionar avance</summary><div class="tools-menu"><button id="btn-export">Descargar respaldo</button><button id="btn-import">Cargar respaldo</button><button id="btn-restore-banner">Restaurar clases ocultas</button><button id="btn-reset" class="danger">Reiniciar avance</button></div></details><input type="file" id="file-input" accept=".json,application/json" hidden></header>
-    <section class="intro"><p class="eyebrow">UN PASO A LA VEZ</p><h1>Tu próxima meta empieza aquí.</h1><p>Visualiza lo que has logrado y elige lo que sigue.</p></section>
-    <!-- Overview: métricas calculadas desde los datos, sin totals escritos manualmente. -->
-    <section class="stats" aria-label="Resumen del avance"><div class="progress-stat"><span>Tu recorrido</span><strong id="stat-progress">0%</strong><div class="progress-track"><div id="progress-bar"></div></div><small>del plan completado</small></div><div><span>Asignaturas aprobadas</span><strong id="stat-passed">0 / 54</strong><small>Cada clase cuenta.</small></div><div><span>Unidades valorativas</span><strong id="stat-ca">0 / 216</strong><small>UV acumuladas</small></div><div><span>En curso</span><strong id="stat-active">0</strong><small>Tu enfoque de hoy</small></div></section>
-    <section class="next"><div><p class="eyebrow">EL SIGUIENTE PASO</p><h2>Ya puedes cursarlas <span id="available-count" class="count"></span></h2><p>Cumples sus requisitos. Elige una para verla en tu plan.</p></div><div id="available-list" class="available-list"></div><button id="show-available" class="text-button">Ver todas las disponibles →</button></section>
-    <section class="plan" aria-labelledby="plan-title"><div class="plan-heading"><div><p class="eyebrow">TU MAPA, A TU RITMO</p><h2 id="plan-title" tabindex="-1">Plan de estudios</h2></div><label class="search"><span>Buscar</span><input id="search" type="search" placeholder="Nombre o código de clase" autocomplete="off"></label></div><div class="filter-row"><div class="filters" role="group" aria-label="Filtrar por estado"><button data-filter="ALL" aria-pressed="true">Todas</button><button data-filter="UNLOCKED" aria-pressed="false">Disponibles</button><button data-filter="IN_PROGRESS" aria-pressed="false">En curso</button><button data-filter="PASSED" aria-pressed="false">Aprobadas</button><button data-filter="LOCKED" aria-pressed="false">Bloqueadas</button></div><span id="results" class="results"></span></div><div id="curriculum-container"></div></section>
-    <footer>Hecho para avanzar con claridad.<span>Herramienta independiente · Verifica tu plan con la UNAH.</span></footer>
-  </main>
-  <p id="notice" role="status" class="notice" hidden></p>
+
+    <!-- ======================================== -->
+    <!-- ACCESIBILIDAD                            -->
+    <!-- ======================================== -->
+
+    <a class="skip" href="#contenido">
+        Saltar al contenido
+    </a>
+
+
+    <!-- ======================================== -->
+    <!-- BARRA LATERAL                            -->
+    <!-- ======================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- Navegación por áreas -->
+        <p class="nav-label area-label">
+            EXPLORAR POR ÁREA
+        </p>
+
+        <nav
+            id="areas"
+            aria-label="Áreas del plan"
+        ></nav>
+
+
+        <!-- Opciones inferiores -->
+        <div class="sidebar-bottom">
+
+            
+
+         
+
+            <button
+                id="theme-btn"
+                class="theme"
+            >
+                Cambiar a modo oscuro
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ======================================== -->
+    <!-- CONTENIDO PRINCIPAL                      -->
+    <!-- ======================================== -->
+
+    <main id="contenido" class="main">
+
+
+        <!-- ==================================== -->
+        <!-- BARRA SUPERIOR                       -->
+        <!-- ==================================== -->
+
+        <header class="topbar">
+
+
+            <span>
+                PLANIFICADOR DE CLASES -  INGENIERÍA EN SISTEMAS COMPUTACIONALES
+            </span>
+
+
+            <!-- Menú de herramientas -->
+            <details class="tools">
+
+                <summary>
+                    Gestionar avance
+                </summary>
+
+                <div class="tools-menu">
+
+                    <button id="btn-export">
+                        Descargar respaldo
+                    </button>
+
+                    <button id="btn-import">
+                        Cargar respaldo
+                    </button>
+
+                    <button id="btn-restore-banner">
+                        Restaurar clases ocultas
+                    </button>
+
+                    <button
+                        id="btn-reset"
+                        class="danger"
+                    >
+                        Reiniciar avance
+                    </button>
+
+                </div>
+
+            </details>
+
+
+            <!-- Selector de archivo para importar respaldos -->
+            <input
+                type="file"
+                id="file-input"
+                accept=".json,application/json"
+                hidden
+            >
+
+        </header>
+
+
+        <!-- ==================================== -->
+        <!-- ESTADÍSTICAS GENERALES               -->
+        <!-- ==================================== -->
+
+        <!--
+            Las métricas se calculan desde los datos.
+            No se deben establecer totales manualmente
+            desde el HTML.
+        -->
+
+        <section
+            class="stats"
+            aria-label="Resumen del avance"
+        >
+
+            <!-- Progreso general -->
+            <div class="progress-stat">
+
+                <span>
+                    Tu recorrido
+                </span>
+
+                <strong id="stat-progress">
+                    0%
+                </strong>
+
+                <div class="progress-track">
+
+                    <div id="progress-bar"></div>
+
+                </div>
+
+                <small>
+                    del plan completado
+                </small>
+
+            </div>
+
+
+            <!-- Asignaturas aprobadas -->
+            <div>
+
+                <span>
+                    Asignaturas aprobadas 
+                </span>
+
+                <strong id="stat-passed">
+                    0 / 54
+                </strong>
+
+                <small>
+                    Cada clase cuenta.
+                </small>
+
+            </div>
+
+
+            <!-- Unidades valorativas -->
+            <div>
+
+                <span>
+                    Unidades valorativas
+                </span>
+
+                <strong id="stat-ca">
+                    0 / 216
+                </strong>
+
+                <small>
+                    UV acumuladas
+                </small>
+
+            </div>
+
+
+            <!-- Asignaturas en curso -->
+            <div>
+
+                <span>
+                    En curso
+                </span>
+
+                <strong id="stat-active">
+                    0
+                </strong>
+
+                <small>
+                    Tu enfoque de hoy
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================== -->
+        <!-- PRÓXIMAS ASIGNATURAS DISPONIBLES     -->
+        <!-- ==================================== -->
+
+        <section class="next">
+
+            <!-- Encabezado -->
+            <div>
+
+                <h2>
+                    Clases disponibles
+
+                    <span
+                        id="available-count"
+                        class="count"
+                    ></span>
+                </h2>
+
+                <p>
+                    Estas son las asignaturas que puedes cursar ahora mismo.
+                </p>
+
+            </div>
+
+
+            <!-- Lista de asignaturas disponibles -->
+            <div
+                id="available-list"
+                class="available-list"
+            ></div>
+
+
+            <!-- Botón para mostrar todas -->
+            <button
+                id="show-available"
+                class="text-button"
+            >
+                Ver todas las disponibles →
+            </button>
+
+        </section>
+
+
+        <!-- ==================================== -->
+        <!-- PLAN DE ESTUDIOS                     -->
+        <!-- ==================================== -->
+
+        <section
+            class="plan"
+            aria-labelledby="plan-title"
+        >
+
+
+            <!-- Encabezado del plan -->
+            <div class="plan-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        TU MAPA, A TU RITMO
+                    </p>
+
+                    <h2
+                        id="plan-title"
+                        tabindex="-1"
+                    >
+                        Plan de estudios
+                    </h2>
+
+                </div>
+
+
+                <!-- Buscador de asignaturas -->
+                <label class="search">
+
+                    <span>
+                        Buscar
+                    </span>
+
+                    <input
+                        id="search"
+                        type="search"
+                        placeholder="Nombre o código de clase"
+                        autocomplete="off"
+                    >
+
+                </label>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- FILTROS DE ASIGNATURAS            -->
+            <!-- ================================= -->
+
+            <div class="filter-row">
+
+                <div
+                    class="filters"
+                    role="group"
+                    aria-label="Filtrar por estado"
+                >
+
+                    <!-- Todas las asignaturas -->
+                    <button
+                        data-filter="ALL"
+                        aria-pressed="true"
+                    >
+                        Todas
+                    </button>
+
+
+                    <!-- Asignaturas disponibles -->
+                    <button
+                        data-filter="UNLOCKED"
+                        aria-pressed="false"
+                    >
+                        Disponibles
+                    </button>
+
+
+                    <!-- Asignaturas en curso -->
+                    <button
+                        data-filter="IN_PROGRESS"
+                        aria-pressed="false"
+                    >
+                        En curso
+                    </button>
+
+
+                    <!-- Asignaturas aprobadas -->
+                    <button
+                        data-filter="PASSED"
+                        aria-pressed="false"
+                    >
+                        Aprobadas
+                    </button>
+
+
+                    <!-- Asignaturas bloqueadas -->
+                    <button
+                        data-filter="LOCKED"
+                        aria-pressed="false"
+                    >
+                        Bloqueadas
+                    </button>
+
+                </div>
+
+
+                <!-- Contador de resultados -->
+                <span
+                    id="results"
+                    class="results"
+                ></span>
+
+            </div>
+
+
+            <!-- ================================= -->
+            <!-- CONTENEDOR DEL PLAN ACADÉMICO     -->
+            <!-- ================================= -->
+
+            <!--
+                Aquí JavaScript genera dinámicamente
+                las asignaturas y su información.
+            -->
+
+            <div id="curriculum-container"></div>
+
+        </section>
+
+
+        <!-- ==================================== -->
+        <!-- PIE DE PÁGINA                        -->
+        <!-- ==================================== -->
+
+        <footer>
+
+            Hecho para avanzar con claridad. 
+
+            <span>
+                Herramienta independiente · 
+                Verifica tu plan con la UNAH.
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <!-- ======================================== -->
+    <!-- NOTIFICACIONES DEL SISTEMA               -->
+    <!-- ======================================== -->
+
+    <!--
+        Elemento utilizado para mostrar mensajes
+        y notificaciones generadas por JavaScript.
+    -->
+
+    <p
+        id="notice"
+        role="status"
+        class="notice"
+        hidden
+    ></p>
+
 </body>
+
 </html>
