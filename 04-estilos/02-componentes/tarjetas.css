@@ -1,0 +1,182 @@
+/* ==========================================================
+   07. COURSE GRID
+   Ambient layer: colores suaves detrás de las tarjetas de vidrio.
+   ========================================================== */
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  border-radius: var(--radius);
+
+  background:
+    radial-gradient(
+      ellipse at 5% 5%,
+      var(--glow-blue),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 95% 55%,
+      var(--glow-green),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 45% 100%,
+      var(--glow-gold),
+      transparent 65%
+    );
+}
+
+/* Solid fallback: conserva legibilidad si no hay soporte para blur. */
+.course {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Name priority: mismo tamaño para todos y sin cortar títulos largos. */
+.course > h3 {
+  order: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+  /* Shared space: reserva tres líneas, pero permite crecer si hace falta. */
+  margin-bottom: 14px;
+  min-height: calc(var(--course-title-size) * 3.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  font-size: var(--course-title-size);
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  padding: 8px 10px;
+  text-align: center;
+  overflow-wrap: anywhere;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.123);
+
+}
+
+/* General info: código, UV y estado siempre van después del nombre. */
+.course > .course-top {
+  order: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.uv {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.badge {
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.badge.UNLOCKED {
+  background: var(--soft);
+  color: var(--green);
+}
+
+.badge.PASSED {
+  background: var(--green);
+  color: var(--paper);
+}
+
+.badge.IN_PROGRESS {
+  background: var(--soft);
+  color: var(--blue);
+}
+
+/* Requirements: detalles secundarios disponibles sin saturar la tarjeta. */
+.course > details {
+  order: 2;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.course summary {
+  padding: 4px 0;
+  line-height: 1.5;
+}
+
+.course-detail p {
+  margin-top: 8px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* State control: el selector queda alineado al pie de cada tarjeta. */
+.course > .state-label {
+  order: 3;
+  display: block;
+  margin-top: auto;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.state-label select {
+  display: block;
+  width: 100%;
+  margin-top: 7px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.state-label select:disabled {
+  background: var(--bg);
+  color: var(--muted);
+}
+
+.course:focus-within {
+  border-color: var(--blue);
+}
+
+/* Glass enhancement: blur afecta el fondo, nunca las letras. */
+@supports (
+  (backdrop-filter: blur(1px)) or
+  (-webkit-backdrop-filter: blur(1px))
+) {
+  .course {
+    background: var(--glass-card);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  .course > h3 {
+    background:
+      linear-gradient(
+        135deg,
+        var(--glass-title),
+        transparent
+      ),
+      var(--glass-title);
+
+    -webkit-backdrop-filter: blur(10px) saturate(125%);
+    backdrop-filter: blur(10px) saturate(125%);
+  }
+}
+
