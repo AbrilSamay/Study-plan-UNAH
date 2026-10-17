@@ -1,0 +1,269 @@
+/* ==========================================================
+   09. RESPONSIVE
+   Breakpoint flow: escritorio, tablet y teléfono.
+   ========================================================== */
+
+@media (max-width: 1200px) {
+  :root {
+    --sidebar-width: 225px;
+    --page-padding: 28px;
+  }
+
+  .sidebar {
+    padding: 28px 17px;
+  }
+
+  .course-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stats > div {
+    padding: 0 17px;
+  }
+
+  .available-list {
+    grid-template-columns: 1fr;
+  }
+
+  .available-item > button:first-child {
+    padding: 12px 13px;
+  }
+}
+
+@media (max-width: 800px) {
+  :root {
+    --page-padding: 22px;
+  }
+
+  .sidebar {
+    position: static;
+    width: auto;
+    padding: 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand {
+    font-size: 19px;
+  }
+
+  .monogram {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-label,
+  .nav-active,
+  .sidebar nav small {
+    display: none;
+  }
+
+  .sidebar nav {
+    display: flex;
+    gap: 6px;
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+
+  .sidebar nav button {
+    flex-shrink: 0;
+    padding: 10px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  /* Mobile preference: mantiene accesible el botón de tema. */
+  .sidebar-bottom {
+    margin-top: 14px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .sidebar-bottom > .local-dot,
+  .sidebar-bottom > p {
+    display: none;
+  }
+
+  .theme {
+    width: auto;
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  .topbar {
+    min-height: 65px;
+    padding: 14px 16px;
+  }
+
+  .intro {
+    padding: 24px 0 30px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 24px;
+  }
+
+  .stats > div:nth-child(2) {
+    border-right: 0;
+  }
+
+  .stats strong {
+    font-size: 26px;
+  }
+
+  .next {
+    padding: 22px;
+  }
+
+  .plan-heading,
+  .filter-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search,
+  .search input {
+    width: 100%;
+  }
+
+  .filters {
+    gap: 2px;
+  }
+
+  .filters button {
+    padding: 9px;
+  }
+
+  .area-heading h3 {
+    font-size: 10px;
+  }
+
+  .area-heading > span:last-child {
+    display: none;
+  }
+
+  footer {
+    flex-direction: column;
+  }
+
+  .notice {
+    right: 18px;
+    left: 18px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --page-padding: 17px;
+  }
+
+  .course-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .course {
+    padding: 12px;
+  }
+
+  .next {
+    padding: 20px;
+  }
+
+  .area-heading {
+    align-items: flex-start;
+  }
+
+  .tools > summary {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+
+  .topbar {
+    gap: 10px;
+    padding: 12px;
+  }
+}
+
+/* ==========================================================
+   10. CSS MOTION
+   Subtle interaction: animación suave solo cuando se permite.
+   ========================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .progress-track > div {
+    transition: width 0.3s ease;
+  }
+
+  .course {
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .course > h3 {
+    transition: border-color 0.2s ease;
+  }
+
+  .intro,
+  .stats,
+  .next {
+    animation: appear 0.4s ease both;
+  }
+
+  .stats {
+    animation-delay: 0.06s;
+  }
+
+  .next {
+    animation-delay: 0.12s;
+  }
+
+  /* Hover only: evita desplazamientos al tocar tarjetas en mobile. */
+  @media (hover: hover) and (pointer: fine) {
+    .course:hover {
+      transform: translateY(-3px);
+      border-color: var(--blue);
+      box-shadow: 0 14px 32px rgb(23 43 69 / 12%);
+    }
+
+    .course:hover > h3 {
+      border-color: var(--blue);
+    }
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
