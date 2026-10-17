@@ -1,0 +1,7 @@
+# Personal data: nunca publicar sesiones, secretos ni respaldos.
+path_isc_backup*.json
+.env*
+!.env.example
+node_modules/
+.DS_Store
+.vscode/

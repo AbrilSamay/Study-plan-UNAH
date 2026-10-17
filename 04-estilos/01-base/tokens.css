@@ -1,0 +1,167 @@
+/* ==========================================================
+   01. DESIGN TOKENS
+   Shared values: colores, medidas y efectos de toda la página.
+   ========================================================== */
+
+:root {
+  color-scheme: light;
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 14px;
+
+  --bg: #f5f6f8;
+  --paper: #ffffff;
+  --ink: #172b45;
+  --muted: #626e7e;
+  --line: #dce3ec;
+  --blue: #214c83;
+  --soft: #eaf0f8;
+  --green: #26705b;
+  --danger: #b33e3e;
+  --gold: #c3a052;
+
+  --sidebar-width: 255px;
+  --page-padding: 48px;
+  --radius: 12px;
+  --shadow: 0 8px 30px rgb(23 43 69 / 5%);
+
+  /* Title scale: todos los nombres comparten esta misma medida. */
+  --course-title-size: clamp(1.125rem, 1rem + 0.35vw, 1.4rem);
+
+  /* Glass tokens: superficies transparentes sobre un fondo con color. */
+  --glass-card: rgb(255 255 255 / 68%);
+  --glass-title: rgb(255 255 255 / 48%);
+  --glass-border: rgb(255 255 255 / 78%);
+  --glass-shadow: 0 8px 24px rgb(23 43 69 / 7%);
+
+  --glow-blue: rgb(100 153 225 / 18%);
+  --glow-green: rgb(88 183 157 / 12%);
+  --glow-gold: rgb(224 187 104 / 13%);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #111a26;
+  --paper: #192434;
+  --ink: #e7edf6;
+  --muted: #afbdd0;
+  --line: #344255;
+  --blue: #a6caff;
+  --soft: #263c57;
+  --green: #8cd5b7;
+  --danger: #ffaaa3;
+  --gold: #d6b96c;
+  --shadow: 0 8px 30px rgb(0 0 0 / 12%);
+
+  --glass-card: rgb(25 36 52 / 72%);
+  --glass-title: rgb(255 255 255 / 6%);
+  --glass-border: rgb(191 215 255 / 16%);
+  --glass-shadow: 0 10px 28px rgb(0 0 0 / 18%);
+
+  --glow-blue: rgb(80 132 222 / 18%);
+  --glow-green: rgb(54 145 124 / 13%);
+  --glow-gold: rgb(190 149 62 / 9%);
+}
+
+/* ==========================================================
+   02. BASE
+   Reset and accessibility: comportamiento común y foco visible.
+   ========================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+
+  /* Ambient background: da profundidad visible detrás del vidrio. */
+  background-image:
+    radial-gradient(
+      ellipse at 90% 10%,
+      var(--glow-blue),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 15% 60%,
+      var(--glow-green),
+      transparent 55%
+    );
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  border-radius: 7px;
+}
+
+button,
+a,
+input,
+select,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  border: 0;
+  background: none;
+  color: inherit;
+}
+
+button,
+summary {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled {
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: var(--soft);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Skip link: navegación rápida para usuarios de teclado. */
+.skip {
+  position: fixed;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  padding: 15px;
+  background: var(--paper);
+  border-radius: 7px;
+}
+
+.skip:focus {
+  top: 12px;
+}
+

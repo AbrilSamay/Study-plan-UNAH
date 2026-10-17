@@ -1,0 +1,6 @@
+/* CSS entry: carga base, componentes y responsive en orden de responsabilidad. */
+@import url('./01-base/tokens.css');
+@import url('./02-componentes/layout.css');
+@import url('./02-componentes/tarjetas.css');
+@import url('./03-responsive/adaptacion.css');
+@import url('./02-componentes/controles.css');
