@@ -1,0 +1,5 @@
+# Local files: evita publicar respaldos personales y archivos del editor.
+path_isc_backup*.json
+node_modules/
+.DS_Store
+.vscode/
