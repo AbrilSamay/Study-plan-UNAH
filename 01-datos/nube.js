@@ -1,6 +1,5 @@
-// Public config: solo URL y publishable key; nunca service_role ni contraseñas.
-// Setup pending: se completa al conectar el proyecto Supabase autorizado.
+// Public client config: URL del proyecto y publishable key; nunca usar service_role ni contraseñas.
 export const cloudConfig = {
-  url: 'https://TU-PROJECT-REF.supabase.co',
-  publishableKey: 'sb_publishable_TU_CLAVE'
+  url: 'https://lewomzddcrbppaehjanu.supabase.co',
+  publishableKey: 'sb_publishable_xxNlV1779SLbKiBccygq3Q_wsD7UDWB'
 };
