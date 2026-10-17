@@ -10,7 +10,7 @@
         content="Organiza tu ruta académica de Sistemas: avance, asignaturas y prerrequisitos en un solo lugar."
     >
 
-    <title>Mi ruta académica · ISC</title>
+    <title>Planificador de clases · UNAH</title>
 
     <!-- Estilos principales -->
     <link rel="stylesheet" href="04-estilos/principal.css">
@@ -34,7 +34,8 @@
     <!-- BARRA LATERAL                            -->
     <!-- ======================================== -->
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar" aria-label="Áreas del plan">
+        <button id="close-sidebar" type="button" class="close-sidebar" aria-label="Cerrar menú de áreas">×</button>
 
 
         <!-- Navegación por áreas -->
@@ -71,6 +72,7 @@
     <!-- CONTENIDO PRINCIPAL                      -->
     <!-- ======================================== -->
 
+    <button id="menu-backdrop" class="menu-backdrop" type="button" aria-label="Cerrar menú de áreas" hidden></button>
     <main id="contenido" class="main">
 
 
@@ -79,6 +81,7 @@
         <!-- ==================================== -->
 
         <header class="topbar">
+            <button id="menu-toggle" class="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar u ocultar áreas">☰</button>
 
 
             <span>
@@ -86,6 +89,7 @@
             </span>
 
 
+            <button id="account-btn" class="account-button" type="button">Cuenta</button>
             <!-- Menú de herramientas -->
             <details class="tools">
 
@@ -139,6 +143,9 @@
             No se deben establecer totales manualmente
             desde el HTML.
         -->
+
+        <!-- Save feedback: solo informa el estado real del guardado. -->
+        <div class="sync-strip" data-state="local"><span class="sync-dot" aria-hidden="true"></span><span id="sync-status" role="status">Recuperando avance…</span><button id="sync-action" type="button">Sincronizar</button></div>
 
         <section
             class="stats"
@@ -432,6 +439,24 @@
         hidden
     ></p>
 
+    <!-- Account controls: necesarios para usar el mismo avance en otros dispositivos. -->
+    <dialog id="account-dialog" aria-labelledby="account-title">
+      <div class="dialog-top"><h2 id="account-title">Cuenta</h2><button id="close-account" class="icon-button" type="button" aria-label="Cerrar cuenta">×</button></div>
+      <div id="cloud-unavailable" class="setup-note" hidden>La conexión a la nube está pendiente. El avance se guarda en este navegador.</div>
+      <form id="auth-form">
+        <label>Correo electrónico<input id="auth-email" type="email" autocomplete="email" required></label>
+        <label>Contraseña<input id="auth-password" type="password" autocomplete="current-password" minlength="8" required></label>
+        <button id="login-btn" class="primary-button" type="submit">Iniciar sesión</button>
+        <button id="register-btn" class="secondary-button" type="button">Crear cuenta</button>
+      </form>
+      <div id="signed-in" hidden>
+        <p class="account-email" id="account-email"></p>
+        <button id="retry-sync" class="primary-button" type="button">Sincronizar ahora</button>
+        <button id="adopt-local" class="secondary-button" type="button">Importar el avance local anterior</button>
+        <button id="logout-btn" class="danger secondary-button" type="button">Cerrar sesión</button>
+      </div>
+      <p id="auth-message" class="auth-message" role="status"></p>
+    </dialog>
 </body>
 
 </html>
