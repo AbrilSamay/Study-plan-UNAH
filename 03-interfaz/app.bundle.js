@@ -20956,8 +20956,8 @@ ${suffix}`;
 
   // 01-datos/nube.js
   var cloudConfig = {
-    url: "",
-    publishableKey: ""
+    url: "https://lewomzddcrbppaehjanu.supabase.co",
+    publishableKey: "sb_publishable_xxNlV1779SLbKiBccygq3Q_wsD7UDWB"
   };
 
   // 02-logica/02-nube/cliente.js
