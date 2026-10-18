@@ -27,7 +27,6 @@ const service = createProgressService({
   },
   onAccount(account) {
     user = account;
-    $('#account-btn').textContent = 'Cuenta';
     $('#auth-form').hidden = Boolean(user) || !service.isConfigured();
     $('#signed-in').hidden = !user;
     $('#account-email').textContent = user?.email || '';
@@ -154,7 +153,6 @@ function openAccount() {
   $('#auth-form').hidden = Boolean(user) || !service.isConfigured();
   if (!$('#account-dialog').open) $('#account-dialog').showModal();
 }
-$('#account-btn').onclick = openAccount;
 $('#close-account').onclick = () => $('#account-dialog').close();
 $('#sync-action').onclick = () => { if (user && ['error','offline','pending'].includes($('.sync-strip').dataset.state)) void service.sync(); else openAccount(); };
 async function authenticate(register = false) {
