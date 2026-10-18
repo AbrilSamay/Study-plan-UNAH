@@ -21192,7 +21192,6 @@ ${suffix}`;
     },
     onAccount(account) {
       user = account;
-      $("#account-btn").textContent = "Cuenta";
       $("#auth-form").hidden = Boolean(user) || !service.isConfigured();
       $("#signed-in").hidden = !user;
       $("#account-email").textContent = user?.email || "";
@@ -21372,7 +21371,6 @@ ${suffix}`;
     $("#auth-form").hidden = Boolean(user) || !service.isConfigured();
     if (!$("#account-dialog").open) $("#account-dialog").showModal();
   }
-  $("#account-btn").onclick = openAccount;
   $("#close-account").onclick = () => $("#account-dialog").close();
   $("#sync-action").onclick = () => {
     if (user && ["error", "offline", "pending"].includes($(".sync-strip").dataset.state)) void service.sync();
